@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include "memory.c"
+#include "random.c"
 
 #if defined(SAFETY) || defined(DEBUG)
 #include "trace.c"
@@ -59,6 +60,7 @@ int main( int argc, char* argv[] )
 
 	term_setup();
 	reset_ptr();
+    rand_init();
 
 	FILE *source = fopen(argv[1], "r");
 
@@ -119,6 +121,10 @@ int main( int argc, char* argv[] )
                 }
                 break;
 
+            case 42: // * rand() < current value
+                *memptr = get_rand(*memptr);
+                break;
+
 			#ifdef DEBUG
             case 84: // T stack trace
                 debug_print_trace();
@@ -150,7 +156,7 @@ int main( int argc, char* argv[] )
 		}
 
         /* Check for infinite loops (simple) */
-        if( buff == last && buff == 42 && lptr == memptr )
+        if( buff == last && buff == 64 && lptr == memptr )
         {
             printf("\nFATAL: infinite loop!\n");
 
@@ -163,7 +169,7 @@ int main( int argc, char* argv[] )
         }
 
         /* Check for infinite loops (stack trace) */
-        if( buff == 42 )
+        if( buff == 64 )
         {
             for( int i = 0; i < 10; i += 2 )
             {

@@ -33,6 +33,7 @@ Below is a short summary of the currently available instructions:
   -   decrease value of current cell
   +   increase value of current cell
   0   reset value in current cell
+  *   replace value with a random number between 0 and the original value
 ```
 
 ### Pointer instructions

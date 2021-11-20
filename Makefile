@@ -15,7 +15,15 @@ mem_y = 4
 #
 use_safety = yes
 
-
+## Random uses OpenSSL?
+#
+# The default generator doesn't give numbers
+# random enough. This is why alternative
+# backends are provided.
+#
+# Available backends: openssl
+#
+rand_backend = openssl
 
 
 #################
@@ -23,23 +31,35 @@ use_safety = yes
 #  UNLESS SURE  #
 #################
 
-src = main.c memory.c trace.c
+src = main.c memory.c trace.c random.c
 cc  = gcc
 
-def = -DMEMX=$(mem_x) -DMEMY=$(mem_y)
+cflags  =
+ldflags =
+
+def  = -DMEMX=$(mem_x) -DMEMY=$(mem_y)
+
+def += -DRAND_BACKEND=$(rand_backend)
 
 ifeq "$(use_safety)" "yes"
 def += -DSAFETY
 endif
 
+ifeq "$(rand_backend)" "openssl"
+cflags  += $(shell pkg-config --cflags openssl)
+ldflags += $(shell pkg-config --libs   openssl)
+endif
+
 duh: $(src)
 	$(cc) main.c -o$@ -O2 -Wall \
-		$(def)
+		$(def) \
+		$(cflags) $(ldflags)
 
 duh-dbg: $(src) debug.c
 	$(cc) main.c -o$@ -O2 -Wall \
 		-DDEBUG -ggdb \
-		$(def)
+		$(def) \
+		$(cflags) $(ldflags)
 
 clean:
 	@-rm -f duh duh-dbg *~
