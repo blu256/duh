@@ -42,6 +42,18 @@ Below is a short summary of the currently available instructions:
   '   jump to cell 0          (reset pointer)
 ```
 
+### Seeking instructions
+```
+  *  go to the instruction N
+  ^  seek forward by N instructions
+```
+(where `N` the current cell value)
+
+### Conditions
+```
+  & if current value is zero, skip next instruction
+```
+
 ### Input/output
 ```
    :  get single-byte value and place it in current cell

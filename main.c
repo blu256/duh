@@ -82,6 +82,19 @@ int main( int argc, char* argv[] )
 				putchar(*memptr);
 				break;
 
+            case 42: // * goto
+                fseek(source, *memptr, SEEK_SET);
+                break;
+
+            case 94: // ^ seek
+                fseek(source, *memptr, SEEK_CUR);
+                break;
+
+            case 38: // & if zero, skip next instruction
+                if(!*memptr)
+                    fseek(source, 1, SEEK_CUR);
+                break;
+
 			#ifdef DEBUG
 			case 77: // M memory map
 				debug_memorymap(memory);
