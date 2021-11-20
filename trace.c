@@ -1,3 +1,9 @@
+/***************************
+ * Name:       trace.c     *
+ * Programmer: blu.256     *
+ * Date:       2021/11/20  *
+ ***************************/
+
 #ifndef __TRACE__
 #define __TRACE__
 

@@ -1,3 +1,9 @@
+/***************************
+ * Name:       main.c      *
+ * Programmer: blu.256     *
+ * Date:       2021/11/20  *
+ ***************************/
+
 #include <stdio.h>
 #include <stdint.h>
 #include <termios.h>
