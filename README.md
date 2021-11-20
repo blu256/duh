@@ -50,6 +50,16 @@ Below is a short summary of the currently available instructions:
 ```
 (where `N` the current cell value)
 
+### Jumping instructions
+You can mark points in code with the `|` symbol and then use the
+following instructions to jumb back to them.
+
+```
+  _  jump to first | to the left
+  =  jump to first | to the right
+  #  jump to the nth occurence of |, according to current value
+```
+
 ### Conditions
 ```
   &  if current value is zero, skip next instruction

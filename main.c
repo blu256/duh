@@ -104,6 +104,62 @@ int main( int argc, char* argv[] )
                 fseek(source, *memptr, SEEK_SET);
                 break;
 
+            case 95: // _ jump to first | to the left
+            {
+                char tmp = 0;
+                int  old = ftell(source);
+                while( fseek(source, -2, SEEK_CUR) == 0 )
+                {
+                    tmp = fgetc(source);
+                    if( tmp == 124 )
+                        break;
+                }
+
+                if( tmp != 124 )
+                    fseek(source, old, SEEK_SET);
+
+                break;
+            }
+
+            case 61: // = jump to first | to the right
+            {
+                char tmp = 0;
+                int  old = ftell(source);
+                while( (tmp = fgetc(source)) != EOF )
+                {
+                    if( tmp == 124 )
+                        break;
+                }
+
+                if( tmp != 124 )
+                    fseek(source, old, SEEK_SET);
+
+                break;
+            }
+
+            case 35: // # jump to | by value
+            {
+                char tmp       = 0;
+                int  occurence = 0;
+                int  old       = ftell(source);
+
+                fseek(source, 0, SEEK_SET);
+                while( (tmp = fgetc(source)) != EOF )
+                {
+                    if( tmp == 124 )
+                    {
+                        ++occurence;
+                        if( occurence == *memptr )
+                            break;
+                    }
+                }
+
+                if( occurence == 0 || occurence != *memptr )
+                    fseek(source, old, SEEK_SET);
+
+                break;
+            }
+
             case 94: // ^ seek
                 fseek(source, *memptr, SEEK_CUR);
                 break;
