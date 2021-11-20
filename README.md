@@ -51,8 +51,8 @@ Below is a short summary of the currently available instructions:
 
 ### Conditions
 ```
-  & if current value is zero, skip next instruction
-  ` if current value is zero, exit
+  &  if current value is zero, skip next instruction
+  `  if current value is zero, exit
 ```
 
 ### Input/output
