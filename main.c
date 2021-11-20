@@ -13,6 +13,11 @@ static struct termios oldt, newt;
 
 char buff;
 
+#ifdef SAFETY
+uint32_t* lptr;
+char      last;
+#endif
+
 void cleanup()
 {
 	tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
@@ -103,12 +108,24 @@ int main( int argc, char* argv[] )
 		}
 
 		#ifdef SAFETY
+        /* Check position in memory */
 		if( memptr == &memory[ sizeof(memory) / sizeof(memory[0]) ] )
 		{
 			printf("\nFATAL: tried to access out-of-bounds memory!\n");
 			cleanup();
 			return 2;
 		}
+
+        /* Check for infinite loops (simple) */
+        if( buff == last && buff == 42 && lptr == memptr )
+        {
+            printf("\nFATAL: infinite loop!\n");
+            cleanup();
+            return 3;
+        }
+
+        last = buff;
+        lptr = memptr;
 		#endif
 	}
 
