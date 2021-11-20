@@ -8,6 +8,12 @@
 mem_x = 8
 mem_y = 4
 
+## Built-in protections
+#
+# Precautions against unexpected behaviour.
+# You probably want this to be on.
+#
+use_safety = yes
 
 
 
@@ -20,13 +26,17 @@ mem_y = 4
 src = main.c memory.c trace.c
 cc  = gcc
 
+def = -DMEMX=$(mem_x) -DMEMY=$(mem_y)
+
+ifeq "$(use_safety)" "yes"
+def += -DSAFETY
+endif
+
 duh: $(src)
 	$(cc) main.c -o$@ -O2 -Wall \
-		-DSAFETY \
-		-DMEMX=$(mem_x) -DMEMY=$(mem_y)
+		$(def)
 
 duh-dbg: $(src) debug.c
 	$(cc) main.c -o$@ -O2 -Wall \
-		-DSAFETY \
-		-DMEMX=$(mem_x) -DMEMY=$(mem_y) \
-		-DDEBUG -ggdb
+		-DDEBUG -ggdb \
+		$(def)
