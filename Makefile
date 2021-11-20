@@ -5,8 +5,8 @@
 # For example, an 8x4 memory (default)
 # gives you 32 single-byte memory blocks.
 #
-mem_x = 3
-mem_y = 3
+mem_x = 8
+mem_y = 4
 
 
 
