@@ -92,7 +92,7 @@ int main( int argc, char* argv[] )
 				putchar(*memptr);
 				break;
 
-            case 42: // * goto
+            case 64: // @ goto
                 fseek(source, *memptr, SEEK_SET);
                 break;
 

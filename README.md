@@ -44,7 +44,7 @@ Below is a short summary of the currently available instructions:
 
 ### Seeking instructions
 ```
-  *  go to the instruction N
+  @  go to the instruction N
   ^  seek forward by N instructions
 ```
 (where `N` the current cell value)
