@@ -22,9 +22,11 @@ cc  = gcc
 
 duh: $(src)
 	$(cc) main.c -o$@ -O2 -Wall \
+		-DSAFETY \
 		-DMEMX=$(mem_x) -DMEMY=$(mem_y)
 
 duh-dbg: $(src) debug.c
 	$(cc) main.c -o$@ -O2 -Wall \
+		-DSAFETY \
 		-DMEMX=$(mem_x) -DMEMY=$(mem_y) \
 		-DDEBUG -ggdb

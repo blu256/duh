@@ -88,6 +88,15 @@ int main( int argc, char* argv[] )
 				break;
 			#endif
 		}
+
+		#ifdef SAFETY
+		if( memptr == &memory[ sizeof(memory) / sizeof(memory[0]) ] )
+		{
+			printf("\nFATAL: tried to access out-of-bounds memory!\n");
+			cleanup();
+			return 2;
+		}
+		#endif
 	}
 
 	cleanup();
