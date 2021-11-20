@@ -52,6 +52,7 @@ Below is a short summary of the currently available instructions:
 ### Conditions
 ```
   & if current value is zero, skip next instruction
+  ` if current value is zero, exit
 ```
 
 ### Input/output
@@ -64,6 +65,7 @@ Below is a short summary of the currently available instructions:
 **NOTE**: These options are available only in debugging builds.
 ```
    M  print memory map
+   T  print stack trace
 ```
 
 All other symbols are ignored by design.
