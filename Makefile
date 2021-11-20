@@ -40,3 +40,6 @@ duh-dbg: $(src) debug.c
 	$(cc) main.c -o$@ -O2 -Wall \
 		-DDEBUG -ggdb \
 		$(def)
+
+clean:
+	@-rm -f duh duh-dbg *~
