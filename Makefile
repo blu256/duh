@@ -17,7 +17,7 @@ mem_y = 4
 #  UNLESS SURE  #
 #################
 
-src = main.c memory.c
+src = main.c memory.c trace.c
 cc  = gcc
 
 duh: $(src)

@@ -3,6 +3,27 @@
 
 #include "memory.c"
 
+
+void debug_print_trace()
+{
+    printf("Stack trace:\n");
+    for( int i = 0; i < 5; ++i )
+    {
+        if(! stack_trace[i].ins )
+            continue;
+
+        printf(
+            "  %i) Line %i:\t%c\t&%lx = 0x%x <%c>\n",
+            i + 1,
+            stack_trace[i].pos,
+            stack_trace[i].ins,
+            stack_trace[i].memptr - &memory[0],
+            stack_trace[i].memval,
+            stack_trace[i].memval
+        );
+    }
+}
+
 void debug_memorymap(uint32_t* memory)
 {
 	/* X Header */

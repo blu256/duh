@@ -5,6 +5,10 @@
 
 #include "memory.c"
 
+#if defined(SAFETY) || defined(DEBUG)
+#include "trace.c"
+#endif
+
 #ifdef DEBUG
 #include "debug.c"
 #endif
@@ -17,6 +21,7 @@ char buff;
 uint32_t* lptr;
 char      last;
 #endif
+
 
 void cleanup()
 {
@@ -100,18 +105,40 @@ int main( int argc, char* argv[] )
                     fseek(source, 1, SEEK_CUR);
                 break;
 
+            case 96: // ` if zero, exit
+                if(!*memptr)
+                {
+                    cleanup();
+                    return 0;
+                }
+                break;
+
 			#ifdef DEBUG
+            case 84: // T stack trace
+                debug_print_trace();
+                break;
+
 			case 77: // M memory map
 				debug_memorymap(memory);
 				break;
 			#endif
 		}
 
+        #ifdef DEBUG
+        struct Trace trace = { (int)ftell(source), buff, memptr, *memptr };
+        trace_push(trace);
+        #endif
+
 		#ifdef SAFETY
         /* Check position in memory */
 		if( memptr == &memory[ sizeof(memory) / sizeof(memory[0]) ] )
 		{
 			printf("\nFATAL: tried to access out-of-bounds memory!\n");
+
+            #ifdef DEBUG
+            debug_print_trace();
+            #endif
+
 			cleanup();
 			return 2;
 		}
@@ -120,8 +147,32 @@ int main( int argc, char* argv[] )
         if( buff == last && buff == 42 && lptr == memptr )
         {
             printf("\nFATAL: infinite loop!\n");
+
+            #ifdef DEBUG
+            debug_print_trace();
+            #endif
+
             cleanup();
             return 3;
+        }
+
+        /* Check for infinite loops (stack trace) */
+        if( buff == 42 )
+        {
+            for( int i = 0; i < 10; i += 2 )
+            {
+                if( stack_trace[i].pos == ftell(source) )
+                {
+                    printf("\nFATAL: infinite loop!\n");
+
+                    #ifdef DEBUG
+                    debug_print_trace();
+                    #endif
+
+                    cleanup();
+                    return 3;
+                }
+            }
         }
 
         last = buff;
