@@ -172,12 +172,12 @@ int main( int argc, char* argv[] )
 					if( tmp == JMP_MARK )
 					{
 						++occurence;
-						if( occurence == *memptr )
+						if( occurence == (int)*memptr )
 							break;
 					}
 				}
 
-				if( occurence == 0 || occurence != *memptr )
+				if( occurence == 0 || occurence != (int)*memptr )
 					fseek(source, old, SEEK_SET);
 
 				break;
@@ -201,10 +201,12 @@ int main( int argc, char* argv[] )
 				break;
 
 			case VAL_SWAP:
+			{
 				wchar_t tmp = *memptr;
 				*memptr = reg;
 				reg = tmp;
 				break;
+			}
 
 			#ifdef DEBUG
 			case 84: // T stack trace
