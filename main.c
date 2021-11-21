@@ -196,6 +196,10 @@ int main( int argc, char* argv[] )
 			case 77: // M memory map
 				debug_memorymap(memory);
 				break;
+
+			case 80: // P print cell
+				debug_print_cell(memptr);
+				break;
 			#endif
 		}
 

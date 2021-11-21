@@ -10,6 +10,16 @@
 #include "memory.c"
 
 
+void debug_print_cell(wchar_t* cell)
+{
+	printf(
+		"&%lx = 0x%x <%lc>\n",
+		cell - &memory[0],
+		*cell,
+		*cell
+	);
+}
+
 void debug_print_trace()
 {
 	printf("Stack trace:\n");

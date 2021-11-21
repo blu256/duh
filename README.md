@@ -77,6 +77,7 @@ following instructions to jumb back to them.
 ```
    M  print memory map
    T  print stack trace
+   P  print cell information
 ```
 
 All other symbols are ignored by design.
