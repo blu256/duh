@@ -99,6 +99,14 @@ int main( int argc, char* argv[] )
 				reset_ptr();
 				break;
 
+			case VAL_LSFT:
+				*memptr = *memptr << 1;
+				break;
+
+			case VAL_RSFT:
+				*memptr = *memptr >> 1;
+				break;
+
 			case VAL_SCAN:
 				scanf("%lc", memptr);
 				break;

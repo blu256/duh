@@ -10,6 +10,8 @@
 #define VAL_RSET 92  // \  reset value
 #define VAL_RAND 42  // *  0 < random < current value
 #define VAL_SWAP 126 // ~  swap value and register
+#define VAL_LSFT 60  // <  left shift by 1
+#define VAL_RSFT 62  // >  right shift by 1
 
 /* Pointer instructions */
 #define PTR_INCR 41  // (  increase pointer

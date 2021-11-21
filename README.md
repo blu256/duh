@@ -32,6 +32,8 @@ Below is a short summary of the currently available instructions:
 ```
   -  decrease value of current cell
   +  increase value of current cell
+  <  left-shift value by 1
+  >  right-shift value by 1
   \  reset value in current cell
   *  replace value with a random number between 0 and the original value
   ~  swap value with register
