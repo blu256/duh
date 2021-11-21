@@ -32,7 +32,7 @@ Below is a short summary of the currently available instructions:
 ```
   -  decrease value of current cell
   +  increase value of current cell
-  0  reset value in current cell
+  \  reset value in current cell
   *  replace value with a random number between 0 and the original value
   Y  swap value with register
 ```
@@ -93,3 +93,8 @@ The language itself is prone to change, major breakages etc. Keep in mind I'm do
 Apart from the main memory there is one additional register, which can be accessed and modified with the `~` instruction.
 
 The register can store a value temporary. You could even use it to move values in memory!
+
+### Comments
+
+Any characted unused by the `duh` language is ignored. Thus, it is a safe bet that you can use all lowercase letters (some
+uppercase letters are reserved for debugging features) and all numbers.

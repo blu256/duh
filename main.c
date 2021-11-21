@@ -87,7 +87,7 @@ int main( int argc, char* argv[] )
 				++memptr;
 				break;
 
-			case 48: // 0 reset value
+			case 92: // \ reset value
 				*memptr = 0;
 				break;
 
