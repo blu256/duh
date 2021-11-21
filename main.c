@@ -64,8 +64,10 @@ int main( int argc, char* argv[] )
 
 	FILE *source = fopen(argv[1], "r");
 
-	while( (buff = fgetc(source)) != EOF )
+	while(! feof(source) )
 	{
+		buff = getc(source);
+		
 		switch(buff)
 		{
 			case 43: // + increase value
@@ -125,8 +127,10 @@ int main( int argc, char* argv[] )
             {
                 char tmp = 0;
                 int  old = ftell(source);
-                while( (tmp = fgetc(source)) != EOF )
+                while(! feof(source) )
                 {
+			tmp = getc(source);
+			
                     if( tmp == 124 )
                         break;
                 }
@@ -144,8 +148,12 @@ int main( int argc, char* argv[] )
                 int  old       = ftell(source);
 
                 fseek(source, 0, SEEK_SET);
-                while( (tmp = fgetc(source)) != EOF )
+                while(! feof(source) )
                 {
+			tmp = getc(source);
+			
+
+			
                     if( tmp == 124 )
                     {
                         ++occurence;
