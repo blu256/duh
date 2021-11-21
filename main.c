@@ -241,38 +241,6 @@ int main( int argc, char* argv[] )
 			return 2;
 		}
 
-		/* Check for infinite loops (simple) */
-		if( buff == last && buff == 64 && lptr == memptr )
-		{
-			printf("\nFATAL: infinite loop!\n");
-
-			#ifdef DEBUG
-			debug_print_trace();
-			#endif
-
-			cleanup();
-			return 3;
-		}
-
-		/* Check for infinite loops (stack trace) */
-		if( buff == 64 )
-		{
-			for( int i = 0; i < 10; i += 2 )
-			{
-				if( stack_trace[i].pos == ftell(source) )
-				{
-					printf("\nFATAL: infinite loop!\n");
-
-					#ifdef DEBUG
-					debug_print_trace();
-					#endif
-
-					cleanup();
-					return 3;
-				}
-			}
-		}
-
 		last = buff;
 		lptr = memptr;
 		#endif
