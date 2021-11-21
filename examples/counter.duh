@@ -1,0 +1,23 @@
+oooooooooooooooooooooooooooooooooooooooo
+o                                      o
+o counter example                      o
+o                                      o
+o this program displays numbers from 0 o
+o to 10.                               o
+o                                      o
+o copyright 2021 blu.256               o
+o                                      o
+oooooooooooooooooooooooooooooooooooooooo
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++) digit char base
+++++++++++++++++++++++++++++++++)                 space char
++++++++++                                         count up to nine
+|
+ ((+;
+ );
+ )-
+&_
+
+ten needs special treatment
+((--------;-;
