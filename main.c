@@ -65,10 +65,12 @@ int main( int argc, char* argv[] )
 
 	FILE *source = fopen(argv[1], "r");
 
+	int success;
 	while(! feof(source) )
 	{
 		buff = getc(source);
-		
+		success = 1;
+
 		switch(buff)
 		{
 			case 43: // + increase value
@@ -211,11 +213,18 @@ int main( int argc, char* argv[] )
 				debug_print_cell(&reg);
 				break;
 			#endif
+
+			default:
+				success = 0;
+				break;
 		}
 
-		#ifdef DEBUG
-		struct Trace trace = { (int)ftell(source), buff, memptr, *memptr };
-		trace_push(trace);
+		#if defined(SAFETY) || defined(DEBUG)
+		if( success )
+		{
+			struct Trace trace = { (int)ftell(source), buff, memptr, *memptr };
+			trace_push(trace);
+		}
 		#endif
 
 		#ifdef SAFETY
