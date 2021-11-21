@@ -1,8 +1,8 @@
 /***************************
-* Name:       main.c      *
-* Programmer: blu.256     *
-* Date:       2021/11/20  *
-***************************/
+ * Name:       main.c      *
+ * Programmer: blu.256     *
+ * Date:       2021/11/20  *
+ ***************************/
 
 #include <termios.h>
 #include <unistd.h>
@@ -11,6 +11,8 @@
 
 #include "memory.c"
 #include "random.c"
+
+#include "keycodes.h"
 
 #if defined(SAFETY) || defined(DEBUG)
 #include "trace.c"
@@ -73,60 +75,64 @@ int main( int argc, char* argv[] )
 
 		switch(buff)
 		{
-			case 43: // + increase value
+			case VAL_INCR:
 				++*memptr;
 				break;
 
-			case 45: // - decrease value
+			case VAL_DECR:
 				--*memptr;
 				break;
 
-			case 40: // ( decrease pointer
-				--memptr;
-				break;
-
-			case 41: // ) increase pointer
+			case PTR_INCR:
 				++memptr;
 				break;
 
-			case 92: // \ reset value
+			case PTR_DECR:
+				--memptr;
+				break;
+
+			case VAL_RSET:
 				*memptr = 0;
 				break;
 
-			case 39: // ' reset pointer
+			case PTR_RSET:
 				reset_ptr();
 				break;
 
-			case 58: // : get value
+			case VAL_SCAN:
 				scanf("%lc", memptr);
 				break;
 
-			case 59: // ; put value
+			case VAL_PRIN:
 				printf("%lc", *memptr);
 				break;
 
-			case 64: // @ goto
+			case SRC_GOTO:
 				fseek(source, *memptr, SEEK_SET);
 				break;
 
-			case 95: // _ jump to first | to the left
+			case SRC_SEEK:
+				fseek(source, *memptr, SEEK_CUR);
+				break;
+
+			case JMP_LEFT:
 			{
 				char tmp = 0;
 				int  old = ftell(source);
 				while( fseek(source, -2, SEEK_CUR) == 0 )
 				{
 					tmp = fgetc(source);
-					if( tmp == 124 )
+					if( tmp == JMP_MARK )
 						break;
 				}
 
-				if( tmp != 124 )
+				if( tmp != JMP_MARK )
 					fseek(source, old, SEEK_SET);
 
 				break;
 			}
 
-			case 61: // = jump to first | to the right
+			case JMP_RGHT:
 			{
 				char tmp = 0;
 				int  old = ftell(source);
@@ -134,17 +140,17 @@ int main( int argc, char* argv[] )
 				{
 					tmp = getc(source);
 			
-					if( tmp == 124 )
+					if( tmp == JMP_MARK )
 						break;
 				}
 
-				if( tmp != 124 )
+				if( tmp != JMP_MARK )
 					fseek(source, old, SEEK_SET);
 
 				break;
 			}
 
-			case 35: // # jump to | by value
+			case JMP_GOTO:
 			{
 				char tmp       = 0;
 				int  occurence = 0;
@@ -155,7 +161,7 @@ int main( int argc, char* argv[] )
 				{
 					tmp = getc(source);
 
-					if( tmp == 124 )
+					if( tmp == JMP_MARK )
 					{
 						++occurence;
 						if( occurence == *memptr )
@@ -169,16 +175,12 @@ int main( int argc, char* argv[] )
 				break;
             }
 
-			case 94: // ^ seek
-				fseek(source, *memptr, SEEK_CUR);
-				break;
-
-			case 38: // & if zero, skip next instruction
+			case CND_SKIP:
 				if(!*memptr)
 					fseek(source, 1, SEEK_CUR);
 				break;
 
-			case 96: // ` if zero, exit
+			case CND_TERM:
 				if(!*memptr)
 				{
 					cleanup();
@@ -186,11 +188,11 @@ int main( int argc, char* argv[] )
 				}
 				break;
 
-			case 42: // * rand() < current value
+			case VAL_RAND:
 				*memptr = get_rand(*memptr);
 				break;
 
-			case 126: // ~ swap cell with register
+			case VAL_SWAP:
 				wchar_t tmp = *memptr;
 				*memptr = reg;
 				reg = tmp;

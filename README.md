@@ -34,7 +34,7 @@ Below is a short summary of the currently available instructions:
   +  increase value of current cell
   \  reset value in current cell
   *  replace value with a random number between 0 and the original value
-  Y  swap value with register
+  ~  swap value with register
 ```
 
 ### Pointer instructions
