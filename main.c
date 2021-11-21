@@ -26,7 +26,7 @@ char buff;
 
 #ifdef SAFETY
 wchar_t* lptr;
-char      last;
+char     last;
 #endif
 
 
@@ -188,6 +188,12 @@ int main( int argc, char* argv[] )
 				*memptr = get_rand(*memptr);
 				break;
 
+			case 126: // ~ swap cell with register
+				wchar_t tmp = *memptr;
+				*memptr = reg;
+				reg = tmp;
+				break;
+
 			#ifdef DEBUG
 			case 84: // T stack trace
 				debug_print_trace();
@@ -199,6 +205,10 @@ int main( int argc, char* argv[] )
 
 			case 80: // P print cell
 				debug_print_cell(memptr);
+				break;
+
+			case 82: // R print register
+				debug_print_cell(&reg);
 				break;
 			#endif
 		}

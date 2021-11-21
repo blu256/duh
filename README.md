@@ -30,17 +30,18 @@ Below is a short summary of the currently available instructions:
 
 ### Value instructions
 ```
-  -   decrease value of current cell
-  +   increase value of current cell
-  0   reset value in current cell
-  *   replace value with a random number between 0 and the original value
+  -  decrease value of current cell
+  +  increase value of current cell
+  0  reset value in current cell
+  *  replace value with a random number between 0 and the original value
+  Y  swap value with register
 ```
 
 ### Pointer instructions
 ```
-  (   previous memory cell    (decrement pointer)
-  )   next memory cell        (increment pointer)
-  '   jump to cell 0          (reset pointer)
+  (  previous memory cell    (decrement pointer)
+  )  next memory cell        (increment pointer)
+  '  jump to cell 0          (reset pointer)
 ```
 
 ### Seeking instructions
@@ -68,7 +69,7 @@ following instructions to jumb back to them.
 
 ### Input/output
 ```
-   :  get single-byte value and place it in current cell
+   :  get value and place it in current cell
    ;  print value of current cell
 ```
 
@@ -78,8 +79,17 @@ following instructions to jumb back to them.
    M  print memory map
    T  print stack trace
    P  print cell information
+   R  print register information
 ```
 
 All other symbols are ignored by design.
 
 The language itself is prone to change, major breakages etc. Keep in mind I'm doing this just for fun (and as a practice in C ;-)
+
+## Notes
+
+### Register
+
+Apart from the main memory there is one additional register, which can be accessed and modified with the `~` instruction.
+
+The register can store a value temporary. You could even use it to move values in memory!

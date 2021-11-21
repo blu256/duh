@@ -20,7 +20,7 @@
 
 wchar_t  memory[ MEMX * MEMY ];
 wchar_t* memptr;
-
+wchar_t  reg;
 
 void reset_ptr()
 {
