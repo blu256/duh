@@ -19,7 +19,7 @@ void debug_print_trace()
 					continue;
 
 			printf(
-					"  %i) Line %i:\t%c\t&%lx = 0x%x <%c>\n",
+					"  %i) Line %i:\t%c\t&%lx = 0x%x <%lc>\n",
 					i + 1,
 					stack_trace[i].pos,
 					stack_trace[i].ins,
@@ -30,7 +30,7 @@ void debug_print_trace()
 	}
 }
 
-void debug_memorymap(uint32_t* memory)
+void debug_memorymap(wchar_t* memory)
 {
 	/* X Header */
 	printf("  ");
@@ -56,10 +56,10 @@ void debug_memorymap(uint32_t* memory)
 		for( int x = 0; x < MEMX; ++x )
 		{
 			/* Cell */
-			uint32_t m = memory[y * MEMX + x];
+			wchar_t m = memory[y * MEMX + x];
 			if(!m)
 				m = ' ';
-			printf("%c", m);
+			printf("%lc", m);
 		}
 		printf("|\n");
 	}

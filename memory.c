@@ -7,8 +7,8 @@
 #ifndef __MEMORY__
 #define __MEMORY__
 
-#include <stdint.h>
 #include <stdlib.h>
+#include <wchar.h>
 
 #ifndef MEMX
 #define MEMX 8
@@ -18,8 +18,8 @@
 #define MEMY 4
 #endif
 
-uint32_t  memory[ MEMX * MEMY ];
-uint32_t* memptr;
+wchar_t  memory[ MEMX * MEMY ];
+wchar_t* memptr;
 
 
 void reset_ptr()

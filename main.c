@@ -4,10 +4,10 @@
 * Date:       2021/11/20  *
 ***************************/
 
-#include <stdio.h>
-#include <stdint.h>
 #include <termios.h>
 #include <unistd.h>
+#include <locale.h>
+#include <stdio.h>
 
 #include "memory.c"
 #include "random.c"
@@ -25,7 +25,7 @@ static struct termios oldt, newt;
 char buff;
 
 #ifdef SAFETY
-uint32_t* lptr;
+wchar_t* lptr;
 char      last;
 #endif
 
@@ -61,6 +61,7 @@ int main( int argc, char* argv[] )
 	term_setup();
 	reset_ptr();
 	rand_init();
+	setlocale(LC_CTYPE, "");
 
 	FILE *source = fopen(argv[1], "r");
 
@@ -95,11 +96,11 @@ int main( int argc, char* argv[] )
 				break;
 
 			case 58: // : get value
-				*memptr = getchar();
+				scanf("%lc", memptr);
 				break;
 
 			case 59: // ; put value
-				putchar(*memptr);
+				printf("%lc", *memptr);
 				break;
 
 			case 64: // @ goto

@@ -10,7 +10,7 @@
 struct Trace {
 	int       pos;
 	char      ins;
-	uint32_t* memptr;
+	wchar_t*  memptr;
 	int       memval;
 };
 
