@@ -25,7 +25,7 @@
 /* Jumping instructions */
 #define JMP_LEFT 95  // _  jump to first mark to the left
 #define JMP_RGHT 61  // =  jump to first mark to the right
-#define JMP_GOTO 35  // #  jump to mark by value
+#define JMP_GOTO 36  // $  jump to mark by value
 
 /* Conditions */
 #define CND_SKIP 38  // & if value is zero, skip next instruction
