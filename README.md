@@ -73,7 +73,7 @@ following instructions to jumb back to them.
 ```
   _  jump to first | to the left
   =  jump to first | to the right
-  #  jump to the nth occurence of |, according to current value
+  $  jump to the nth occurence of |, according to current value
 ```
 
 ### Conditions
