@@ -64,11 +64,11 @@ Below is a short summary of the currently available instructions:
   @  go to the instruction N
   ^  seek forward by N instructions
 ```
-(where `N` the current cell value)
+(where `N` is the current cell value)
 
 ### Jumping instructions
 You can mark points in code with the `|` symbol and then use the
-following instructions to jumb back to them.
+following instructions to jump back to them.
 
 ```
   _  jump to first | to the left
@@ -115,5 +115,5 @@ The register can store a value temporarily. You could probably use it to rearran
 
 ### Comments
 
-Any characted unused by the `duh` language is ignored. Thus, it is a safe bet that you can use all lowercase letters (some
+Any characted unused by the `duh` language is ignored. Thus, it is a safe bet that you can use all the lowercase letters (some
 uppercase letters are reserved for debugging features) and all numbers.
