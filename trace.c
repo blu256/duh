@@ -1,18 +1,10 @@
 /***************************
  * Name:       trace.c     *
  * Programmer: blu.256     *
- * Date:       2021/11/20  *
+ * Date:       2024/07/05  *
  ***************************/
 
-#ifndef __TRACE__
-#define __TRACE__
-
-struct Trace {
-	int       pos;
-	char      ins;
-	wchar_t*  memptr;
-	int       memval;
-};
+#include "trace.h"
 
 struct Trace stack_trace[5] = {};
 
@@ -24,5 +16,3 @@ void trace_push(struct Trace trace)
 	}
 	stack_trace[0] = trace;
 }
-
-#endif

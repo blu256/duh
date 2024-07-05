@@ -9,17 +9,21 @@
 #include <locale.h>
 #include <stdio.h>
 
-#include "memory.c"
-#include "random.c"
+#include "memory.h"
+#include "random.h"
 
 #include "keycodes.h"
 
-#if defined(SAFETY) || defined(DEBUG)
-#include "trace.c"
+#if defined(SAFETY) || defined(EXTENSION_DEBUG)
+# include "trace.h"
 #endif
 
-#ifdef DEBUG
-#include "debug.c"
+#if defined(EXTENSION_DEBUG)
+# include "debug.h"
+#endif
+
+#if defined(EXTENSION_ANSI)
+# include "ansi.h"
 #endif
 
 static struct termios oldt, newt;
@@ -27,8 +31,8 @@ static struct termios oldt, newt;
 char buff;
 
 #ifdef SAFETY
-wchar_t* lptr;
-char     last;
+ wchar_t* lptr;
+ char     last;
 #endif
 
 
@@ -229,7 +233,33 @@ int main( int argc, char* argv[] )
 				*memptr = reg;
 				break;
 
-			#ifdef DEBUG
+			#ifdef EXTENSION_ANSI
+			case 88: // X ansi
+			{
+				char seq[*memptr + 1];
+				for (int i = 0; i < *memptr; ++i)
+				{
+					seq[i] = getc(source);
+				}
+				seq[*memptr] = '\0';
+				ansi(seq);
+				break;
+			}
+
+			case 34: // " print
+			{
+				char seq[*memptr + 1];
+				for (int i = 0; i < *memptr; ++i)
+				{
+					seq[i] = getc(source);
+				}
+				seq[*memptr] = '\0';
+				print(seq);
+				break;
+			}
+			#endif
+
+			#ifdef EXTENSION_DEBUG
 			case 84: // T stack trace
 				debug_print_trace();
 				break;
@@ -252,7 +282,7 @@ int main( int argc, char* argv[] )
 				break;
 		}
 
-		#if defined(SAFETY) || defined(DEBUG)
+		#if defined(SAFETY) || defined(EXTENSION_DEBUG)
 		if( success )
 		{
 			struct Trace trace = { (int)ftell(source), buff, memptr, *memptr };
@@ -260,13 +290,13 @@ int main( int argc, char* argv[] )
 		}
 		#endif
 
-		#ifdef SAFETY
+		#if defined(SAFETY)
 		/* Check position in memory */
 		if( memptr >= &memory[ sizeof(memory) / sizeof(memory[0]) ] )
 		{
 			printf("\nFATAL: tried to access out-of-bounds memory!\n");
 
-			#ifdef DEBUG
+			#if defined(EXTENSION_DEBUG)
 			debug_print_trace();
 			#endif
 

@@ -1,18 +1,16 @@
 /***************************
  * Name:       random.c    *
  * Programmer: blu.256     *
- * Date:       2021/11/20  *
+ * Date:       2024/07/05  *
  ***************************/
-
-#ifndef __RANDOM__
-#define __RANDOM__
 
 #include <time.h>
 
-
-#if RAND_BACKEND == openssl
-#include <openssl/rand.h>
+#if (RAND_BACKEND == RAND_OPENSSL)
+# include <openssl/rand.h>
 #endif
+
+#include "random.h"
 
 void rand_init()
 {
@@ -22,16 +20,14 @@ void rand_init()
 int get_rand(int max) {
     int _num;
 
-    #if RAND_BACKEND == openssl
+#if (RAND_BACKEND == RAND_OPENSSL)
     unsigned char buffer[1];
     if( RAND_bytes(buffer, 1) == 1 )
         _num = buffer[0] % max;
     else
-    #endif
+#endif
 
-        _num = rand() % max;
+    _num = rand() % max;
 
     return _num;
 }
-
-#endif // __RANDOM__

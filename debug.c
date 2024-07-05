@@ -1,13 +1,15 @@
 /***************************
  * Name:       debug.c     *
  * Programmer: blu.256     *
- * Date:       2021/11/20  *
+ * Date:       2024/07/05  *
  ***************************/
 
 #include <stdint.h>
 #include <stdio.h>
 
-#include "memory.c"
+#include "memory.h"
+#include "trace.h"
+#include "debug.h"
 
 
 void debug_print_cell(wchar_t* cell)

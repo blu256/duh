@@ -93,8 +93,25 @@ The following control characters are considered void values: 0 (NUL), 10 (LF), 1
    ;  print value of current cell
 ```
 
-### Debugging
-**NOTE**: These options are available only in debugging builds.
+## Extensions
+These instruction sets are not a part of the core language, but are supported by the standard
+interpreter:
+
+### ANSI
+```
+   X print ANSI sequence to the terminal
+   $ print a string to the terminal
+```
+
+These instructions are meant to make printing stuff to the console easier (and prettier).
+
+The `X` instruction reads the next `value` instructions and prints them as an ANSI sequence.
+The correctness of the sequence is left to the programmer to ensure.
+
+Similarly, the convenience instruction `$` prints the next `value` instructions to the console
+verbatim, making for an easy way to print whole strings with less masochism involved.
+
+### Debug
 ```
    M  print memory map
    T  print stack trace
