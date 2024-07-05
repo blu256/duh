@@ -52,6 +52,11 @@ void term_setup()
 	tcsetattr( STDIN_FILENO, TCSANOW, &newt );
 }
 
+int is_void(int value)
+{
+	return !value || value == CR || value == LF;
+}
+
 int main( int argc, char* argv[] )
 {
 	if( argc != 2 )
@@ -147,7 +152,6 @@ int main( int argc, char* argv[] )
 				while(! feof(source) )
 				{
 					tmp = getc(source);
-			
 					if( tmp == JMP_MARK )
 						break;
 				}
@@ -184,12 +188,12 @@ int main( int argc, char* argv[] )
             }
 
 			case CND_SKIP:
-				if(!*memptr)
+				if (is_void(*memptr))
 					fseek(source, 1, SEEK_CUR);
 				break;
 
 			case CND_TERM:
-				if(!*memptr)
+				if (is_void(*memptr))
 				{
 					cleanup();
 					return 0;
@@ -200,6 +204,15 @@ int main( int argc, char* argv[] )
 				*memptr = get_rand(*memptr);
 				break;
 
+			case VAL_INST:
+			{
+				int old = ftell(source);
+				fseek(source, *memptr, SEEK_SET);
+				*memptr = getc(source);
+				fseek(source, old, SEEK_SET);
+				break;
+			}
+
 			case VAL_SWAP:
 			{
 				wchar_t tmp = *memptr;
@@ -207,6 +220,14 @@ int main( int argc, char* argv[] )
 				reg = tmp;
 				break;
 			}
+
+			case VAL_VTOR:
+				reg = *memptr;
+				break;
+
+			case VAL_RTOV:
+				*memptr = reg;
+				break;
 
 			#ifdef DEBUG
 			case 84: // T stack trace
@@ -241,7 +262,7 @@ int main( int argc, char* argv[] )
 
 		#ifdef SAFETY
 		/* Check position in memory */
-		if( memptr == &memory[ sizeof(memory) / sizeof(memory[0]) ] )
+		if( memptr >= &memory[ sizeof(memory) / sizeof(memory[0]) ] )
 		{
 			printf("\nFATAL: tried to access out-of-bounds memory!\n");
 

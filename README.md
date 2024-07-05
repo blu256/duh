@@ -49,7 +49,10 @@ Below is a short summary of the currently available instructions:
   >  right-shift value by 1
   \  reset value in current cell
   *  replace value with a random number between 0 and the original value
+  %  replace value with the instruction at position indicated by original value
   ~  swap value with register
+  .  assign current value to register
+  ,  assign current register to value
 ```
 
 ### Pointer instructions
@@ -78,9 +81,11 @@ following instructions to jump back to them.
 
 ### Conditions
 ```
-  &  if current value is zero, skip next instruction
-  `  if current value is zero, exit
+  &  if current value is void, skip next instruction
+  `  if current value is void, exit
 ```
+
+The following control characters are considered void values: 0 (NUL), 10 (LF), 13 (CR).
 
 ### Input/output
 ```
